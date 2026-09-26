@@ -5,7 +5,7 @@ import Footer from './components/Footer'
 
 import Home from './pages/Home'
 import AnimeListPage from './pages/AnimeListPage'
-import AnimeDetailsPage from './pages/AnimeDetailsPage'
+import AnimeDetailsPage from './pages/AnimeDetails'
 import SearchPage from './pages/SearchPage'
 import FavoritesPage from './pages/FavoritesPage'
 import NotFound from './pages/NotFound'
