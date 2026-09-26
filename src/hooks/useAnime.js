@@ -1,39 +1,53 @@
-import { useState } from "react";
-import { searchAnime } from "../Api/jikanApi";
 
-const useAnime = () => {
-  const [anime, setAnime] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+import { useEffect, useState } from "react";
+import { getTopAnime, getAnimeById } from "../Api/jikanApi";
 
-  const search = async (query) => {
+function useAnime(id) {
+    const [anime, setAnime] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    
+    const search = async (query) => {
     if (!query.trim()) {
       setAnime([]);
       setError("");
       return;
     }
+  
+    useEffect(() => {
+        function loadAnime() {
+            try {
+                setLoading(true);
+                setError(null);
+              
+                const results = searchAnime(query);
+                setAnime(results);
+              
+                let data;
 
-    try {
-      setLoading(true);
-      setError("");
+                if (id) {
+                    data = getAnimeById(id);
+                } else {
+                    data = getTopAnime();
+                }
 
-      const results = await searchAnime(query);
+                setAnime(data);
+            } catch (error) {
+                setError(error.message);
+            } finally {
+                setLoading(false);
+            }
+        }
 
-      setAnime(results);
-    } catch (err) {
-      setAnime([]);
-      setError("Failed to load anime. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
+        loadAnime();
+    }, [id]);
 
-  return {
-    anime,
-    loading,
-    error,
-    search,
-  };
-};
+    return {
+        anime,
+        loading,
+        error,
+        search
+    };
+}
 
 export default useAnime;

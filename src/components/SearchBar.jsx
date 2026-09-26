@@ -1,26 +1,33 @@
-import { useState } from "react";
+import React, { useState } from 'react';
+import './SearchBar.css';
 
-function SearchBar({ onSearch }) {
-  const [query, setQuery] = useState("");
+const SearchBar = ({ onSearch, placeholder = "Пошук аніме..." }) => {
+  const [searchTerm, setSearchTerm] = useState('');
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    onSearch(query);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (onSearch) {
+      onSearch(searchTerm);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="search-bar" onSubmit={handleSubmit}>
+      {/* Text input, керований через state */}
       <input
         type="text"
-        placeholder="Search anime..."
-        value={query}
-        onChange={(event) => setQuery(event.target.value)}
+        className="search-input"
+        placeholder={placeholder}
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
       />
-
-      <button type="submit">Search</button>
+      
+      {/* Search button */}
+      <button type="submit" className="search-btn">
+        Шукати
+      </button>
     </form>
   );
-}
+};
 
 export default SearchBar;
