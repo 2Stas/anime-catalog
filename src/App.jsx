@@ -9,6 +9,7 @@ import AnimeDetailsPage from './pages/AnimeDetails'
 import SearchPage from './pages/SearchPage'
 import FavoritesPage from './pages/FavoritesPage'
 import NotFound from './pages/NotFound'
+import "./App.css"
 
 function App() {
     return (
