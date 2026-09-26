@@ -1,7 +1,7 @@
 const API_URL = "https://api.jikan.moe/v4";
 
 export function getTopAnime() {
-    const response = fetch(`${API_URL}/top/anime`);
+    const response = fetch(`${API_URL}/top/anime?limit=10`);
 
     if (!response.ok) {
     throw new Error(`Jikan API error: ${response.status}`);
