@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { getTopAnime } from "../Api/jikanApi";
+import { getTopAnime, getAnimeById } from "../Api/jikanApi";
 
-function useAnime() {
+function useAnime(id) {
     const [anime, setAnime] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -12,7 +12,13 @@ function useAnime() {
                 setLoading(true);
                 setError(null);
 
-                const data = getTopAnime();
+                let data;
+
+                if (id) {
+                    data = getAnimeById(id);
+                } else {
+                    data = getTopAnime();
+                }
 
                 setAnime(data);
             } catch (error) {
@@ -23,7 +29,7 @@ function useAnime() {
         }
 
         loadAnime();
-    }, []);
+    }, [id]);
 
     return {
         anime,
