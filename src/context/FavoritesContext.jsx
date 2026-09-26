@@ -1,35 +1,73 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect } from "react";
 
 const FavoritesContext = createContext();
 
-export const FavoritesProvider = ({ children }) => {
+export function FavoritesProvider({ children }) {
   const [favorites, setFavorites] = useState(() => {
-    const saved = localStorage.getItem('anime_favorites');
+    const saved = localStorage.getItem("anime_favorites");
+
     return saved ? JSON.parse(saved) : [];
   });
 
   useEffect(() => {
-    localStorage.setItem('anime_favorites', JSON.stringify(favorites));
+    localStorage.setItem("anime_favorites", JSON.stringify(favorites));
   }, [favorites]);
 
+  const addFavorite = (anime) => {
+    setFavorites((prevFavorites) => {
+      const animeId = anime.mal_id || anime.id;
+
+      if (
+        prevFavorites.some(
+          (favorite) => (favorite.mal_id || favorite.id) === animeId
+        )
+      ) {
+        return prevFavorites;
+      }
+
+      return [...prevFavorites, anime];
+    });
+  };
+
+  const removeFavorite = (animeId) => {
+    setFavorites((prevFavorites) =>
+      prevFavorites.filter(
+        (favorite) => (favorite.mal_id || favorite.id) !== animeId
+      )
+    );
+  };
+
   const isFavorite = (animeId) => {
-    return favorites.some((item) => item.mal_id === animeId || item.id === animeId);
+    return favorites.some(
+      (favorite) => (favorite.mal_id || favorite.id) === animeId
+    );
   };
 
   const toggleFavorite = (anime) => {
-    const id = anime.mal_id || anime.id;
-    if (isFavorite(id)) {
-      setFavorites((prev) => prev.filter((item) => (item.mal_id || item.id) !== id));
+    const animeId = anime.mal_id || anime.id;
+
+    if (isFavorite(animeId)) {
+      removeFavorite(animeId);
     } else {
-      setFavorites((prev) => [...prev, anime]);
+      addFavorite(anime);
     }
   };
 
   return (
-    <FavoritesContext.Provider value={{ favorites, isFavorite, toggleFavorite }}>
+    <FavoritesContext.Provider
+      value={{
+        favorites,
+        addFavorite,
+        removeFavorite,
+        isFavorite,
+        toggleFavorite,
+      }}
+    >
       {children}
     </FavoritesContext.Provider>
   );
-};
+}
 
-export const useFavorites = () => useContext(FavoritesContext);
+export function useFavorites() {
+  return useContext(FavoritesContext);
+}
