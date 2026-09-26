@@ -1,14 +1,26 @@
-function SearchBar() {
-    return (
-        <div>
-            <input
-                type="text"
-                placeholder="Search anime..."
-            />
+import { useState } from "react";
 
-            <button>Search</button>
-        </div>
-    )
+function SearchBar({ onSearch }) {
+  const [query, setQuery] = useState("");
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    onSearch(query);
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        placeholder="Search anime..."
+        value={query}
+        onChange={(event) => setQuery(event.target.value)}
+      />
+
+      <button type="submit">Search</button>
+    </form>
+  );
 }
 
-export default SearchBar
+export default SearchBar;
