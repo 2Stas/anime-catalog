@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getTopAnime, getAnimeById } from "../Api/jikanApi";
+import animeData from "../data/animeData";
 
 function useAnime(id) {
     const [anime, setAnime] = useState([]);
@@ -7,7 +8,7 @@ function useAnime(id) {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        async function loadAnime() {
+        function loadAnime() {
             try {
                 setLoading(true);
                 setError(null);
@@ -15,14 +16,28 @@ function useAnime(id) {
                 let data;
 
                 if (id) {
-                    data = await getAnimeById(id);
+                    data = getAnimeById(id);
                 } else {
-                    data = await getTopAnime();
+                    data = getTopAnime();
                 }
 
                 setAnime(data);
             } catch (error) {
-                setError(error.message);
+                console.log("Jikan API error:", error.message);
+
+                if (id) {
+                    const localAnime = animeData.find(
+                        (item) => item.mal_id === Number(id)
+                    );
+
+                    if (localAnime) {
+                        setAnime(localAnime);
+                    } else {
+                        setError("Anime not found");
+                    }
+                } else {
+                    setAnime(animeData);
+                }
             } finally {
                 setLoading(false);
             }
