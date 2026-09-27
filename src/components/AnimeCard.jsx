@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-// import "./AnimeCard.css";
+import FavoriteButton from "./FavoriteButton";
+import "../style/AnimeCard.css";
 
 const AnimeCard = ({ anime }) => {
     const {
@@ -24,11 +25,15 @@ const AnimeCard = ({ anime }) => {
 
     return (
         <div className="anime-card">
-            <img
-                src={image}
-                alt={title}
-                className="anime-poster"
-            />
+            <div className="anime-poster-container">
+                <img
+                    src={image}
+                    alt={title}
+                    className="anime-poster"
+                />
+
+                <FavoriteButton anime={anime} />
+            </div>
 
             <div className="anime-info">
                 <h3 className="anime-title">
