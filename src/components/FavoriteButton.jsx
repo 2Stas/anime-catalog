@@ -1,6 +1,6 @@
 import React from 'react';
 import { useFavorites } from '../context/FavoritesContext';
-import './FavoriteButton.css';
+import '../style/FavoriteButton.css';
 
 const FavoriteButton = ({ anime }) => {
   const { isFavorite, toggleFavorite } = useFavorites();

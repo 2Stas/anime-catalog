@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import useAnime from "../hooks/useAnime";
+import Loading from "../components/Loading";
 
 function AnimeDetailsPage() {
     const { id } = useParams();
@@ -11,8 +12,8 @@ function AnimeDetailsPage() {
     } = useAnime(id);
 
     if (loading) {
-        return <h2>Loading...</h2>;
-    }
+    return <Loading />;
+}
 
     if (error) {
         return <h2>Error: {error}</h2>;
