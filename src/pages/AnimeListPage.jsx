@@ -1,7 +1,16 @@
+import { useState } from "react";
 import useAnime from "../hooks/useAnime";
+import AnimeList from "../components/AnimeList";
 
 function AnimeListPage() {
-    const { anime, loading, error } = useAnime();
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const {
+        anime,
+        loading,
+        error,
+        pagination
+    } = useAnime(null, currentPage);
 
     if (loading) {
         return <h2>Loading...</h2>;
@@ -15,19 +24,27 @@ function AnimeListPage() {
         <div>
             <h1>Anime Catalog</h1>
 
-            {anime.map((item) => (
-                <div key={item.mal_id}>
-                    <h2>{item.title}</h2>
+            <AnimeList anime={anime} />
 
-                    <img
-                        src={item.images.jpg.image_url}
-                        alt={item.title}
-                        width="200"
-                    />
+            <div>
+                <button
+                    onClick={() => setCurrentPage(currentPage - 1)}
+                    disabled={currentPage === 1}
+                >
+                    Previous
+                </button>
 
-                    <p>Score: {item.score}</p>
-                </div>
-            ))}
+                <span>
+                    Page {currentPage}
+                </span>
+
+                <button
+                    onClick={() => setCurrentPage(currentPage + 1)}
+                    disabled={!pagination || !pagination.has_next_page}
+                >
+                    Next
+                </button>
+            </div>
         </div>
     );
 }

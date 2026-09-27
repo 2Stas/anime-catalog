@@ -13,7 +13,6 @@ const SearchBar = ({ onSearch, placeholder = "Пошук аніме..." }) => {
 
   return (
     <form className="search-bar" onSubmit={handleSubmit}>
-      {/* Text input, керований через state */}
       <input
         type="text"
         className="search-input"
@@ -22,7 +21,6 @@ const SearchBar = ({ onSearch, placeholder = "Пошук аніме..." }) => {
         onChange={(e) => setSearchTerm(e.target.value)}
       />
       
-      {/* Search button */}
       <button type="submit" className="search-btn">
         Шукати
       </button>

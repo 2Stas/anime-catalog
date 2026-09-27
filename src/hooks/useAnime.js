@@ -1,55 +1,54 @@
 import { useEffect, useState } from "react";
-import { getTopAnime, getAnimeById } from "../Api/jikanApi";
-import animeData from "../data/animeData";
+import {
+    getTopAnime,
+    getAnimeById
+} from "../Api/kitsuApi";
 
-function useAnime(id) {
+function useAnime(id, page = 1) {
     const [anime, setAnime] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [pagination, setPagination] = useState(null);
 
     useEffect(() => {
-        function loadAnime() {
+        async function loadAnime() {
             try {
                 setLoading(true);
                 setError(null);
 
-                let data;
-
                 if (id) {
-                    data = getAnimeById(id);
-                } else {
-                    data = getTopAnime();
-                }
+                    const data = await getAnimeById(id);
 
-                setAnime(data);
+                    setAnime(data);
+                    setPagination(null);
+                } else {
+                    const data = await getTopAnime(page);
+
+                    setAnime(data.data);
+
+                    setPagination({
+                        has_next_page: data.links?.next !== null
+                    });
+                }
             } catch (error) {
-                console.log("Jikan API error:", error.message);
+                console.log("Kitsu API error:", error.message);
 
-                if (id) {
-                    const localAnime = animeData.find(
-                        (item) => item.mal_id === Number(id)
-                    );
-
-                    if (localAnime) {
-                        setAnime(localAnime);
-                    } else {
-                        setError("Anime not found");
-                    }
-                } else {
-                    setAnime(animeData);
-                }
+                setError(error.message);
+                setAnime([]);
+                setPagination(null);
             } finally {
                 setLoading(false);
             }
         }
 
         loadAnime();
-    }, [id]);
+    }, [id, page]);
 
     return {
         anime,
         loading,
-        error
+        error,
+        pagination
     };
 }
 
