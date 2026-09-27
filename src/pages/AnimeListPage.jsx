@@ -1,6 +1,7 @@
 import { useState } from "react";
 import useAnime from "../hooks/useAnime";
 import AnimeList from "../components/AnimeList";
+import Loading from "../components/Loading";
 
 function AnimeListPage() {
     const [currentPage, setCurrentPage] = useState(1);
@@ -13,7 +14,7 @@ function AnimeListPage() {
     } = useAnime(null, currentPage);
 
     if (loading) {
-        return <h2>Loading...</h2>;
+        return <Loading />;
     }
 
     if (error) {

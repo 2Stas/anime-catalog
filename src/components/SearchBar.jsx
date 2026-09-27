@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './SearchBar.css';
+import '../style/SearchBar.css';
 
 const SearchBar = ({ onSearch, placeholder = "Пошук аніме..." }) => {
   const [searchTerm, setSearchTerm] = useState('');
