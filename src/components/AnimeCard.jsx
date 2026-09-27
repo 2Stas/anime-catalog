@@ -1,31 +1,63 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-// import './AnimeCard.css'; 
+import React from "react";
+import { Link } from "react-router-dom";
+// import "./AnimeCard.css";
 
 const AnimeCard = ({ anime }) => {
-  const { mal_id, images, title, score, type, episodes } = anime;
+    const {
+        id,
+        attributes
+    } = anime;
 
-  return (
-    <div className="anime-card">
-      <img  src={images?.jpg?.image_url}  alt={title}  className="anime-poster" />
-      
-      <div className="anime-info">
-        <h3 className="anime-title">{title}</h3>
-        
-        <div className="anime-meta">
-          <span className="anime-score">⭐ {score || 'N/A'}</span>
-          <span className="anime-type">{type || 'Unknown'}</span>
-          <span className="anime-episodes">Ep: {episodes || '?'}</span>
+    const title =
+        attributes.titles?.en ||
+        attributes.titles?.en_jp ||
+        attributes.titles?.ja_jp ||
+        "Unknown";
+
+    const image =
+        attributes.posterImage?.small ||
+        attributes.posterImage?.original;
+
+    const score = attributes.averageRating;
+    const type = attributes.showType;
+    const episodes = attributes.episodeCount;
+
+    return (
+        <div className="anime-card">
+            <img
+                src={image}
+                alt={title}
+                className="anime-poster"
+            />
+
+            <div className="anime-info">
+                <h3 className="anime-title">
+                    {title}
+                </h3>
+
+                <div className="anime-meta">
+                    <span className="anime-score">
+                        ⭐ {score || "N/A"}
+                    </span>
+
+                    <span className="anime-type">
+                        {type || "Unknown"}
+                    </span>
+
+                    <span className="anime-episodes">
+                        Ep: {episodes || "?"}
+                    </span>
+                </div>
+
+                <Link
+                    to={`/anime/${id}`}
+                    className="anime-details-btn"
+                >
+                    View Details
+                </Link>
+            </div>
         </div>
-
-        <Link to={`/anime/${mal_id}`} className="anime-details-btn">
-          View Details
-        </Link>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default AnimeCard;
-
-
