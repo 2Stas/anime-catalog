@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { useFavorites } from "../context/FavoritesContext";
 import AnimeList from "../components/AnimeList";
 import "../style/FavoritesPage.css";
@@ -20,6 +21,9 @@ const FavoritesPage = () => {
                         Explore anime and add them to your
                         favorites to see them here!
                     </p>
+                    <Link to="/anime" className="empty-catalog-btn">
+                        Перейти до каталогу
+                    </Link>
                 </div>
             ) : (
                 <AnimeList anime={favorites} />
