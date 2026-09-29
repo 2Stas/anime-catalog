@@ -3,6 +3,7 @@ import useAnime from "../hooks/useAnime";
 import AnimeList from "../components/AnimeList";
 import Loading from "../components/Loading";
 import "../style/AnimeListPage.css";
+import "../style/pagination.css"
 
 function AnimeListPage() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -23,21 +24,25 @@ function AnimeListPage() {
 
       <AnimeList anime={anime} />
 
-      <div>
+      <div className="pagination">
         <button
           onClick={() => setCurrentPage(currentPage - 1)}
           disabled={currentPage === 1}
+          className="pagination-btn"
         >
-          Previous
+          &laquo; Previous
         </button>
 
-        <span>Page {currentPage}</span>
+        <span className="pagination-info">
+          Page <strong className="pagination-page-num">{currentPage}</strong>
+        </span>
 
         <button
           onClick={() => setCurrentPage(currentPage + 1)}
           disabled={!pagination || !pagination.has_next_page}
+          className="pagination-btn"
         >
-          Next
+          Next &raquo;
         </button>
       </div>
     </div>

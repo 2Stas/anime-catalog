@@ -1,26 +1,38 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import useAnime from "../hooks/useAnime";
 import Loading from "../components/Loading";
+import "../style/AnimeDetailsPage.css";
 
 function AnimeDetailsPage() {
     const { id } = useParams();
+    const navigate = useNavigate();
 
-    const {
-        anime,
-        loading,
-        error
-    } = useAnime(id);
+    const { anime, loading, error } = useAnime(id);
 
     if (loading) {
-    return <Loading />;
-}
+        return <Loading />;
+    }
 
     if (error) {
-        return <h2>Error: {error}</h2>;
+        return (
+            <div className="error-container">
+                <h2>Error: {error}</h2>
+                <button onClick={() => navigate(-1)} className="back-btn">
+                    &larr; Back
+                </button>
+            </div>
+        );
     }
 
     if (!anime) {
-        return <h2>Anime not found</h2>;
+        return (
+            <div className="error-container">
+                <h2>Anime not found</h2>
+                <button onClick={() => navigate(-1)} className="back-btn">
+                    &larr; Back
+                </button>
+            </div>
+        );
     }
 
     const attributes = anime.attributes;
@@ -36,64 +48,92 @@ function AnimeDetailsPage() {
         attributes.posterImage?.original;
 
     return (
-        <div>
-            <h1>{title}</h1>
+        <div className="anime-details-page">
+            <button onClick={() => navigate(-1)} className="back-btn">
+                &larr; Back to Catalog
+            </button>
 
-            <img
-                src={image}
-                alt={title}
-                width="300"
-            />
+            <div className="details-card">
+                <div className="details-poster-wrapper">
+                    <img src={image} alt={title} className="details-poster" />
+                </div>
 
-            <p>
-                <strong>English title:</strong>{" "}
-                {attributes.titles?.en || "Not available"}
-            </p>
+                <div className="details-info">
+                    <h1 className="details-title">{title}</h1>
 
-            <p>
-                <strong>Japanese title:</strong>{" "}
-                {attributes.titles?.ja_jp || "Not available"}
-            </p>
+                    <div className="details-section">
+                        <h3>Synopsis</h3>
+                        <p className="synopsis-text">
+                            {attributes.synopsis || "No description available."}
+                        </p>
+                    </div>
 
-            <p>
-                <strong>Synopsis:</strong>{" "}
-                {attributes.synopsis || "No description available"}
-            </p>
+                    <div className="details-grid">
+                        <div className="meta-item">
+                            <span className="meta-label">English Title</span>
+                            <span className="meta-value">
+                                {attributes.titles?.en || "N/A"}
+                            </span>
+                        </div>
 
-            <p>
-                <strong>Score:</strong>{" "}
-                {attributes.averageRating || "Not available"}
-            </p>
+                        <div className="meta-item">
+                            <span className="meta-label">Japanese Title</span>
+                            <span className="meta-value">
+                                {attributes.titles?.ja_jp || "N/A"}
+                            </span>
+                        </div>
 
-            <p>
-                <strong>Episodes:</strong>{" "}
-                {attributes.episodeCount || "Not available"}
-            </p>
+                        <div className="meta-item">
+                            <span className="meta-label">Score</span>
+                            <span className="meta-value highlight">
+                                {attributes.averageRating ? `★ ${attributes.averageRating}%` : "N/A"}
+                            </span>
+                        </div>
 
-            <p>
-                <strong>Status:</strong>{" "}
-                {attributes.status || "Not available"}
-            </p>
+                        <div className="meta-item">
+                            <span className="meta-label">Episodes</span>
+                            <span className="meta-value">
+                                {attributes.episodeCount || "N/A"}
+                            </span>
+                        </div>
 
-            <p>
-                <strong>Type:</strong>{" "}
-                {attributes.showType || "Not available"}
-            </p>
+                        <div className="meta-item">
+                            <span className="meta-label">Status</span>
+                            <span className="meta-value badge">
+                                {attributes.status || "N/A"}
+                            </span>
+                        </div>
 
-            <p>
-                <strong>Start date:</strong>{" "}
-                {attributes.startDate || "Not available"}
-            </p>
+                        <div className="meta-item">
+                            <span className="meta-label">Type</span>
+                            <span className="meta-value">
+                                {attributes.showType || "N/A"}
+                            </span>
+                        </div>
 
-            <p>
-                <strong>End date:</strong>{" "}
-                {attributes.endDate || "Not available"}
-            </p>
+                        <div className="meta-item">
+                            <span className="meta-label">Start Date</span>
+                            <span className="meta-value">
+                                {attributes.startDate || "N/A"}
+                            </span>
+                        </div>
 
-            <p>
-                <strong>Popularity:</strong>{" "}
-                {attributes.popularityRank || "Not available"}
-            </p>
+                        <div className="meta-item">
+                            <span className="meta-label">End Date</span>
+                            <span className="meta-value">
+                                {attributes.endDate || "N/A"}
+                            </span>
+                        </div>
+
+                        <div className="meta-item">
+                            <span className="meta-label">Popularity Rank</span>
+                            <span className="meta-value">
+                                {attributes.popularityRank ? `#${attributes.popularityRank}` : "N/A"}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }

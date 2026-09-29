@@ -18,10 +18,15 @@
 }
 
 .anime-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 24px;
   margin-bottom: 40px;
+}
+.anime-grid > * {
+  flex: 1 1 240px;
+  max-width: 300px;
 }
 
 .pagination {
