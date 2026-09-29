@@ -1,0 +1,66 @@
+.anime-list-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #ffffff;
+  background-color: #121214;
+  min-height: 100vh;
+}
+
+.anime-list-page h1, 
+.page-title {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 32px;
+  color: #f3f3f3;
+  letter-spacing: 1px;
+}
+
+.anime-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 30px;
+  padding-bottom: 20px;
+}
+
+.pagination button {
+  background-color: #6366f1;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.pagination button:hover:not(:disabled) {
+  background-color: #4f46e5;
+  transform: translateY(-2px);
+}
+
+.pagination button:disabled {
+  background-color: #27272a;
+  color: #71717a;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.pagination span {
+  font-size: 1rem;
+  color: #a1a1aa;
+}
+
+
+

@@ -1,13 +1,9 @@
 import { useEffect, useState } from "react";
-import {
-  getTopAnime,
-  searchAnime
-} from "../Api/kitsuApi";
+import { getTopAnime, searchAnime } from "../Api/kitsuApi";
 
 import SearchBar from "../components/SearchBar";
 import AnimeList from "../components/AnimeList";
 import Loading from "../components/Loading";
-
 
 function SearchPage() {
   const [anime, setAnime] = useState([]);
@@ -79,7 +75,7 @@ function SearchPage() {
   }
 
   return (
-    <div>
+    <div className="search-page">
       <h1>Search Anime</h1>
 
       <SearchBar onSearch={handleSearch} />

@@ -24,3 +24,19 @@
   color: #ffffff;
   margin-bottom: 10px;
 }
+
+
+.empty-catalog-btn {
+  display: inline-block;
+  background-color: #6366f1;
+  color: #ffffff;
+  padding: 10px 20px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.empty-catalog-btn:hover {
+  background-color: #4f46e5;
+}
