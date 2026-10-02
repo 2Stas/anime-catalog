@@ -33,7 +33,7 @@
   min-width: 170px;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
-
+ 
 .filter-group select:focus {
   outline: none;
   border-color: #6c5ce7; 
