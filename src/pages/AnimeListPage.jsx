@@ -1,52 +1,115 @@
-import { useState } from "react";
-import useAnime from "../hooks/useAnime";
-import AnimeList from "../components/AnimeList";
-import Loading from "../components/Loading";
-import "../style/AnimeListPage.css";
-import "../style/pagination.css"
+import React, { useState, useEffect } from 'react';
+import { fetchAnimeList } from '../Api/kitsuApi';
+import { AnimeFilters } from '../components/AnimeFilters';
+import AnimeList from '../components/AnimeList';
+import Loading from '../components/Loading';
+import '../style/AnimeListPage.css';
 
-function AnimeListPage() {
-  const [currentPage, setCurrentPage] = useState(1);
+const PAGE_LIMIT = 20;
 
-  const { anime, loading, error, pagination } = useAnime(null, currentPage);
+const initialFilters = {
+  subtype: '',
+  status: '',
+  sort: '',
+};
 
-  if (loading) {
-    return <Loading />;
-  }
+export const AnimeListPage = () => {
+  const [animeList, setAnimeList] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [filters, setFilters] = useState(initialFilters);
+  const [pageOffset, setPageOffset] = useState(0);
+  const [totalCount, setTotalCount] = useState(0);
 
-  if (error) {
-    return <h2>Error: {error}</h2>;
-  }
+  useEffect(() => {
+    const loadAnime = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const response = await fetchAnimeList({
+          pageLimit: PAGE_LIMIT,
+          pageOffset,
+          subtype: filters.subtype,
+          status: filters.status,
+          sort: filters.sort,
+        });
+
+        setAnimeList(response.data || []);
+        if (response.meta) {
+          setTotalCount(response.meta.count);
+        }
+      } catch (err) {
+        setError('Failed to load anime list.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadAnime();
+  }, [pageOffset, filters]);
+
+  const handleFilterChange = (name, value) => {
+    setFilters((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    setPageOffset(0); 
+  };
+
+  const handleResetFilters = () => {
+    setFilters(initialFilters);
+    setPageOffset(0);
+  };
+
+  const handleNextPage = () => {
+    if (pageOffset + PAGE_LIMIT < totalCount) {
+      setPageOffset((prev) => prev + PAGE_LIMIT);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (pageOffset > 0) {
+      setPageOffset((prev) => Math.max(0, prev - PAGE_LIMIT));
+    }
+  };
 
   return (
     <div className="anime-list-page">
       <h1>Anime Catalog</h1>
 
-      <AnimeList anime={anime} />
+      <AnimeFilters
+        filters={filters}
+        onFilterChange={handleFilterChange}
+        onReset={handleResetFilters}
+      />
 
-      <div className="pagination">
-        <button
-          onClick={() => setCurrentPage(currentPage - 1)}
-          disabled={currentPage === 1}
-          className="pagination-btn"
-        >
-          &laquo; Previous
-        </button>
+      {loading && <Loading />}
+      {error && <p className="error-message">{error}</p>}
 
-        <span className="pagination-info">
-          Page <strong className="pagination-page-num">{currentPage}</strong>
-        </span>
+      {!loading && !error && (
+        <>
+          <AnimeList animeList={animeList} />
 
-        <button
-          onClick={() => setCurrentPage(currentPage + 1)}
-          disabled={!pagination || !pagination.has_next_page}
-          className="pagination-btn"
-        >
-          Next &raquo;
-        </button>
-      </div>
+          {/* Пагінація */}
+          <div className="pagination">
+            <button
+              onClick={handlePrevPage}
+              disabled={pageOffset === 0}
+            >
+              Previous
+            </button>
+            <span>
+              Page {Math.floor(pageOffset / PAGE_LIMIT) + 1}
+            </span>
+            <button
+              onClick={handleNextPage}
+              disabled={pageOffset + PAGE_LIMIT >= totalCount}
+            >
+              Next
+            </button>
+          </div>
+        </>
+      )}
     </div>
   );
-}
-
-export default AnimeListPage;
+};
