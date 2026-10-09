@@ -83,3 +83,35 @@ export async function searchAnime(query) {
 
     return data.data;
 }
+
+export async function getGenres() {
+    const response = await fetch(
+        `${API_URL}/genres?page[limit]=50`
+    );
+
+    if (!response.ok) {
+        throw new Error(`Kitsu API error: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    return data.data;
+}
+
+
+export async function getAnimeByGenre(genre, page = 1) {
+    const limit = 10;
+    const offset = (page - 1) * limit;
+
+    const response = await fetch(
+        `${API_URL}/anime?filter[genres]=${encodeURIComponent(genre)}&page[limit]=${limit}&page[offset]=${offset}`
+    );
+
+    if (!response.ok) {
+        throw new Error(`Kitsu API error: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    return data;
+}
