@@ -2,7 +2,6 @@ import { Routes, Route } from "react-router-dom";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import { AnimeListPage } from "./pages/AnimeListPage";
 import { WatchlistProvider } from "./context/WatchlistContext";
 import Home from './pages/Home'
 import AnimeListPage from './pages/AnimeListPage'
