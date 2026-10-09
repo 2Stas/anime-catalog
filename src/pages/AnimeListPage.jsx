@@ -13,7 +13,7 @@ const initialFilters = {
   sort: '',
 };
 
-export const AnimeListPage = () => {
+const AnimeListPage = () => {
   const [animeList, setAnimeList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -113,3 +113,5 @@ export const AnimeListPage = () => {
     </div>
   );
 };
+
+export default AnimeListPage;
