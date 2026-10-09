@@ -4,7 +4,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { WatchlistProvider } from "./context/WatchlistContext";
 import Home from './pages/Home'
-import AnimeListPage from './pages/AnimeListPage'
+import { AnimeListPage } from './pages/AnimeListPage';
 import AnimeDetailsPage from './pages/AnimeDetails'
 import SearchPage from './pages/SearchPage'
 import FavoritesPage from './pages/FavoritesPage'
