@@ -10,8 +10,10 @@ function Header() {
             <nav>
                 <Link to="/">Home</Link>
                 <Link to="/anime">Anime</Link>
+                <Link to="/genres">Genres</Link>
                 <Link to="/search">Search</Link>
                 <Link to="/favorites">Favorites</Link>
+                <Link to="/watchlist" className="nav-link">Watchlist</Link>
             </nav>
         </header>
     )

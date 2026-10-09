@@ -1,0 +1,28 @@
+.watchlist-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+
+.watchlist-page .empty-message {
+  margin-top: 2rem;
+  color: #94a3b8;
+  font-size: 1.1rem;
+}
+
+.watchlist-page .anime-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.watchlist-page .anime-grid .anime-card {
+  width: 250px;
+  flex-shrink: 0;
+}
