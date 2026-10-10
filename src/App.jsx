@@ -11,6 +11,7 @@ import FavoritesPage from './pages/FavoritesPage'
 import NotFound from './pages/NotFound'
 import GenresPage from "./pages/GenresPage";
 import WatchlistPage from "./pages/WatchlistPage";
+import StatisticsPage from "./pages/StatisticsPage";
 import "./style/App.css"
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
             <Route path="/search" element={<SearchPage />} />
             <Route path="/favorites" element={<FavoritesPage />} />
             <Route path="/watchlist" element={<WatchlistPage />} />
+            <Route path="/statistics" element={<StatisticsPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
