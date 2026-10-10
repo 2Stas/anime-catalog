@@ -68,4 +68,48 @@
 }
 
 
+.watching-status-filter {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 20px 0;
+}
 
+.watching-status-filter label {
+    font-weight: 600;
+}
+
+.watching-status-filter select {
+    padding: 9px 12px;
+    border: 1px solid #454e75;
+    border-radius: 8px;
+    background: #202944;
+    color: #f0f2ff;
+    cursor: pointer;
+}
+
+.no-anime-message {
+    margin: 24px 0;
+    text-align: center;
+}
+.status-filter {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 20px 0;
+}
+
+.status-filter label {
+    color: #aeb7d4;
+    font-weight: 600;
+}
+
+.status-filter select {
+    padding: 9px 12px;
+    border: 1px solid #454e75;
+    border-radius: 8px;
+    background: #202944;
+    color: #f0f2ff;
+}

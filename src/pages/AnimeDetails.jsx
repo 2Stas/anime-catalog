@@ -2,6 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import useAnime from "../hooks/useAnime";
 import Loading from "../components/Loading";
 import "../style/AnimeDetailsPage.css";
+import AnimeStatus from "../components/AnimeStatus";
 
 function AnimeDetailsPage() {
     const { id } = useParams();
@@ -60,6 +61,15 @@ function AnimeDetailsPage() {
 
                 <div className="details-info">
                     <h1 className="details-title">{title}</h1>
+
+                    <AnimeStatus anime={anime} />
+
+                    <div className="details-section">
+                        <h3>Synopsis</h3>
+                        <p className="synopsis-text">
+                            {attributes.synopsis || "No description available."}
+                        </p>
+                    </div>
 
                     <div className="details-section">
                         <h3>Synopsis</h3>
