@@ -71,13 +71,6 @@ function AnimeDetailsPage() {
                         </p>
                     </div>
 
-                    <div className="details-section">
-                        <h3>Synopsis</h3>
-                        <p className="synopsis-text">
-                            {attributes.synopsis || "No description available."}
-                        </p>
-                    </div>
-
                     <div className="details-grid">
                         <div className="meta-item">
                             <span className="meta-label">English Title</span>
